@@ -14,8 +14,8 @@ class TabAdapter internal constructor(
     // get the current item with position number
     override fun getItem(position: Int): Fragment {
         val b = Bundle()
-        b.putInt("position", position)
-        val frag: Fragment = DynamicFragment.newInstance()
+        b.putInt("position", position+1)
+        val frag: Fragment = TabFragment.newInstance()
         frag.arguments = b
         return frag
     }

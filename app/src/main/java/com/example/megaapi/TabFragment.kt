@@ -6,11 +6,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.*
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import android.R
 
 
 class TabFragment : Fragment() {
@@ -24,15 +23,23 @@ class TabFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view: View = inflater.inflate(R.layout.fragment_dynamic, container, false)
+        val view: View = inflater.inflate(R.layout.fragment_tab, container, false)
         initViews(view)
         return view
     }
 
     // initialise the categories
     private fun initViews(view: View) {
-        val textView = view.findViewById<TextView>(R.id.commonTextView)
-        textView.text = "Category :  " + arguments!!.getInt("position")
+        val inputUrl = view.findViewById<EditText>(R.id.inputUrl)
+        val txtUrl = view.findViewById<TextView>(R.id.textUrl)
+        val methodSpinner = view.findViewById<Spinner>(R.id.methodSpinner)
+
+        val methods  = listOf("GET", "POST", "PUT", "DELETE")
+        //textView.text = "Category :  " + requireArguments().getInt("position")
+        val adapter: SpinnerAdapter =
+            ArrayAdapter<Any?>(this@TabFragment.requireContext(), android.R.layout.simple_spinner_dropdown_item, methods)
+        methodSpinner.adapter = adapter
+        //Get, Post, Put, Delete
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
