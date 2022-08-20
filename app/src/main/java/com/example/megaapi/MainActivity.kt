@@ -56,13 +56,19 @@ class MainActivity : AppCompatActivity() {
             override fun onTabReselected(tab: TabLayout.Tab) {}
         })
         setTabFragmentToTabLayout(page)
+        viewPager!!.currentItem = 0
     }
 
     // show all the tab using DynamicFragmnetAdapter
     private fun setTabFragmentToTabLayout(page: Int) {
         // here we have given 10 as the tab number
         // you can give any number here
-
+        /*var L :List<TabLayout.Tab> = listOf()
+        for (i in 1..page-1) {
+            L += mTabLayout.getTabAt(i)
+        }
+        L += mTabLayout!!.newTab().setText("Request - $page")
+        mTabLayout.removeAllTabs()*/
         mTabLayout!!.addTab(mTabLayout!!.newTab().setText("Request - $page"))
 
         val mDynamicFragmentAdapter = TabAdapter(
@@ -73,6 +79,6 @@ class MainActivity : AppCompatActivity() {
         viewPager!!.adapter = mDynamicFragmentAdapter
 
         // set the current item as 0 (when app opens for first time)
-        viewPager!!.currentItem = 0
+
     }
 }

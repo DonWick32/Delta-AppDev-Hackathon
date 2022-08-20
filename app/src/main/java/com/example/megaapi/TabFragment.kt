@@ -190,7 +190,6 @@ class TabFragment : Fragment() {
                     }
                 }
 
-
             }
 
         }
