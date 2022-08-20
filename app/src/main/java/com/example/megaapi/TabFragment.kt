@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.*
 
 import androidx.annotation.Nullable;
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment;
 
 
@@ -32,14 +33,41 @@ class TabFragment : Fragment() {
     private fun initViews(view: View) {
         val inputUrl = view.findViewById<EditText>(R.id.inputUrl)
         val txtUrl = view.findViewById<TextView>(R.id.textUrl)
+        val inputHeader = view.findViewById<EditText>(R.id.inputHeader)
+        val inputQuery = view.findViewById<EditText>(R.id.inputQuery)
+        val inputQueryValue = view.findViewById<EditText>(R.id.inputQueryValue)
+        val btnHeader = view.findViewById<Button>(R.id.btnHeader)
+        val btnQuery = view.findViewById<Button>(R.id.btnQuery)
         val methodSpinner = view.findViewById<Spinner>(R.id.methodSpinner)
 
+        var tail = ""
         val methods  = listOf("GET", "POST", "PUT", "DELETE")
         //textView.text = "Category :  " + requireArguments().getInt("position")
         val adapter: SpinnerAdapter =
             ArrayAdapter<Any?>(this@TabFragment.requireContext(), android.R.layout.simple_spinner_dropdown_item, methods)
         methodSpinner.adapter = adapter
-        //Get, Post, Put, Delete
+
+        inputUrl.doOnTextChanged { text, start, before, count ->  txtUrl.text = text.toString()+tail}
+        btnHeader.setOnClickListener {
+            val url : String = txtUrl.text.toString() + "/" + inputHeader.editableText
+            txtUrl.text = url
+            tail+= "/" + inputHeader.editableText
+            inputHeader.setText("")
+        }
+        btnQuery.setOnClickListener {
+            if ("?" in txtUrl.text) {
+                val url: String = txtUrl.text.toString() + "&" + inputQuery.editableText + "=" + inputQueryValue.editableText
+                txtUrl.text = url
+                tail += "&"+ inputQuery.editableText.toString() + "=" + inputQueryValue.editableText
+            }
+            else {
+                val url: String = txtUrl.text.toString() + "?" + inputQuery.editableText + "=" + inputQueryValue.editableText
+                txtUrl.text = url
+                tail += "?" + inputQuery.editableText.toString() + "=" + inputQueryValue.editableText
+            }
+            inputQuery.setText("")
+            inputQueryValue.setText("")
+        }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
